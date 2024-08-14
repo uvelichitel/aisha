@@ -1,0 +1,39 @@
+/* input.css */
+html {
+height:99%;
+width:99%;
+}
+
+#prompt {
+bottom:0;
+position: fixed;
+background: white;
+resize: both;
+}
+
+#shapka {
+top:0;
+position: fixed;
+background: white;
+}
+
+#usage {
+top:50%;
+left:90%;
+position: fixed;
+}
+
+#remain {
+font-size: 2.5em;
+}
+
+#counter {
+font-size: 2.5em;
+}
+
+body {
+height:99%;
+width:99%;
+}
+
+

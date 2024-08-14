@@ -1,0 +1,193 @@
+{{define "about"}}
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8" />
+			<title>Aloha</title>
+			<link rel="stylesheet" href="css/main.css">
+			<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+		</head>
+		<body>
+			{{template "header"}}
+			{{template "aboutcontent"}}
+		</body>
+	</html>
+{{end}}
+
+{{define "tarif"}}
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8" />
+			<title>Тариф</title>
+			<link rel="stylesheet" href="css/main.css">
+			<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+		</head>
+		<body>
+			{{template "header"}}
+			{{template "tarifcontent"}}
+		</body>
+	</html>
+{{end}}
+
+{{define "cabinet"}}
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8" />
+			<title>Кабинет</title>
+			<link rel="stylesheet" href="css/main.css">
+			<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+		</head>
+		<body>
+			{{template "header"}}
+			{{template "cabinetcontent" .}}
+		</body>
+	</html>
+{{end}}
+
+{{define "chat"}}
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8" />
+			<title>Аиша</title>
+			<link rel="stylesheet" href="css/main.css">
+			<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+		</head>
+		<body>
+			{{template "header"}}
+			{{template "chatcontent"}}
+		</body>
+	</html>
+{{end}}
+
+{{define "aboutcontent"}}
+	<div id="about" class="plain">
+		<h1>Aloha</h1>
+		<p>Можем</p>
+	</div>
+{{end}}
+
+{{define "header"}}
+	<div class="container" id="shapka">
+		<a href="https://aishapro.com">
+			<img src="images/aisha_en.png" alt="Aisha" style="width:138px;height:52px;">
+		</a>
+		<a href="chat" onclick="return checkauth();">Аиша</a>
+		<a href="tarif">Тариф</a>
+		<a href="cabinet" onclick="return checkauth();">Кабинет</a>
+		<button type="button" onclick='document.getElementById("loginModal").showModal()'>Войти</button>
+		<button type="button" onclick='document.getElementById("registerModal").showModal()'>Зарегистрироваться</button>
+	</div>
+	<dialog id="loginModal">
+		<div class="container">
+			<label for="telegramID"><b>TelegramID</b></label>
+			<input type="text" id="telegramID" placeholder="Введите telegramID" name="uname" required>
+
+			<label for="psw"><b>Пароль</b></label>
+			<input type="password" id="psw" placeholder="Введите пароль" name="psw" required>
+			<label for="saveCred"><b>Запомнить</b></label>
+			<input type="checkbox" id="saveCred" name="saveCred" checked />
+
+			<button type="button" onclick="login()">Войти</button>
+		</div>
+	</dialog>
+	<dialog id="registerModal">	
+		<div class="container">
+			<label for="uname"><b>TelegramID</b></label>
+			<input type="text" id="regtelegramID" placeholder="Введите telegramID" name="uname" required>
+
+			<label for="psw"><b>Пароль</b></label>
+			<input type="password" id="regpsw" placeholder="Введите пароль" name="psw" required>
+
+			<button type="button" onclick="register()">Зарегистрироваться</button>
+		</div>
+	</dialog>
+	<script>{{template "headerjs"}}</script>
+{{end}}
+
+{{define "cabinetcontent"}}
+	<div id="count">
+	<table>
+		<tr>
+			<th>Осталось</th>
+			<td id="remain">{{.Remain}}</td>
+		</tr>
+	</table>
+	</div>
+	<div class="container">
+		<label for="tPlan">Тариф:</label>
+		<select name="tPlan" id="tPlan">
+			<option value="base">Базовый</option>
+			<option value="ext">БазовыйПлюс</option>
+			<option value="ultra">ВсеВключено</option>
+		</select>
+		<label for="model">Модель:</label>
+		<select name="model" id="model">
+			<option value="gpt-3.5-turbo">Модель3</option>
+			<option value="gpt-4o">Модель4</option>
+		</select>
+		<label for="imgres">Разрешение изображений:</label>
+		<select name="imgres" id="imgres">
+			<option value="1024x1024">1024x1024</option>
+			<option value="1024x1792">1024x1792</option>
+			<option value="1792x1024">1792x1024</option>
+		</select>
+		<label for="imgqlt">Качество изображений:</label>
+		<select name="imgqlt" id="imgqlt">
+			<option value="standard">Стандарт</option>
+			<option value="hd">Детализированное</option>
+		</select>
+		<label for="imgstyle">Стиль изображений:</label>
+		<select name="imgstyle" id="imgstyle">
+			<option value="vivid">Мультяшный</option>
+			<option value="natural">Реалистичный</option>
+		</select>
+		<button type="button" onclick="prefs()">
+			Сохранить
+		</button>
+	</div>
+	<p>Пополнить счет</p>
+	<form id="pay-form" action="" method="post">
+		<input type="text" id="payment" placeholder="Сумма в рублях" required>
+		<button id="pay-button" type="button">Заплатить</button>
+	</form>
+	<script>{{template "cabinetjs" .}}</script>
+{{end}}
+
+{{define "chatcontent"}}
+	<details id="usage">
+		<summary>Ушло</summary>
+		<p id="counter"></p>
+	</details>
+	<div class="container" id='demo-area'>
+		<div id="chat-threads">
+			<button id="add-thread">+</button>
+		</div>
+		<div id="chat-messages">
+			<!-- Chat Messages -->
+			<!-- Chat Messages -->
+		</div>
+		<div class="user-input" id="prompt">
+			<div id="files-to-upload"></div>
+			<form id="chat-form" action="" method="post" enctype="multipart/form-data">
+				Загрузить: <input type="file" name="photo" id="sfile">
+				<button id="clear-files" onclick="clearFiles()">Очистить</button>
+				<textarea id="message-input" placeholder="Пишите здесь..." required></textarea>
+				<label for="aloud"><b>Вслух</b></label>
+				<input type="checkbox" id="aloud" name="aloud" />
+				<button id="send-button">Отправить</button>
+				<button id="reset-context" onclick="clearContext()">Заново</button>
+			</form>
+		</div>
+	</div>
+	<script>{{template "chatjs"}}</script>
+{{end}}
+
+{{define "tarifcontent"}}
+	<div id="tarif" class="plain">
+		<h1>Как тарифицируется</h1>
+		<p>В штуках</p>
+	</div>
+{{end}}
